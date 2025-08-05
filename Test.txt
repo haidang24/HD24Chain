@@ -1,0 +1,133 @@
+🔧 PATCH 1 — Thêm xác thực chữ ký số vào VerifyHeader
+➕ Thêm import:
+"github.com/ethereum/go-ethereum/crypto"
+"log"
+➕ Thêm hàm mới:
+go
+Copy
+Edit
+func (p *POVA) verifySignature(header *types.Header, expected common.Address) error {
+	hash := header.Hash().Bytes()
+	sig := header.Extra
+	pubkey, err := crypto.SigToPub(hash, sig)
+	if err != nil {
+		return err
+	}
+	recovered := crypto.PubkeyToAddress(*pubkey)
+	if recovered != expected {
+		return errors.New("invalid block signature")
+	}
+	return nil
+}
+🧠 Gọi trong VerifyHeader:
+Thay đoạn này:
+
+go
+Copy
+Edit
+if header.Coinbase != expected {
+	return errors.New("unauthorized block proposer")
+}
+Bằng:
+
+go
+Copy
+Edit
+if header.Coinbase != expected {
+	return errors.New("unauthorized block proposer")
+}
+if err := p.verifySignature(header, expected); err != nil {
+	return err
+}
+🔧 PATCH 2 — Bỏ qua validator nếu timeout (Seal)
+Trong Seal() thay đoạn này:
+
+go
+Copy
+Edit
+select {
+case <-time.After(delay):
+case <-stop:
+	return errors.New("sealing stopped")
+}
+Bằng:
+
+go
+Copy
+Edit
+maxWait := 30 * time.Second
+select {
+case <-time.After(delay):
+case <-time.After(maxWait):
+	log.Println("⚠️ Validator timeout, skipping block", "validator", block.Coinbase.Hex())
+	return errors.New("validator timeout")
+case <-stop:
+	return errors.New("sealing stopped")
+}
+🔧 PATCH 3 — Tách logic chọn validator (dễ nâng cấp về sau)
+➕ Thêm hàm:
+go
+Copy
+Edit
+func (p *POVA) getValidator(blockNum uint64) common.Address {
+	return p.validators[(blockNum-1)%uint64(len(p.validators))]
+}
+🧠 Dùng lại trong Prepare, VerifyHeader:
+go
+Copy
+Edit
+expected := p.getValidator(blockNumber)
+go
+Copy
+Edit
+header.Coinbase = p.getValidator(blockNumber)
+🔧 PATCH 4 — Log validator rotation
+Trong VerifyHeader(), thêm:
+
+go
+Copy
+Edit
+log.Printf("🧾 Block %d - Proposer: %s, Expected: %s", blockNumber, header.Coinbase.Hex(), expected.Hex())
+🔧 PATCH 5 — Expose RPC API cho phép query validator của block bất kỳ
+➕ Tạo hàm API:
+go
+Copy
+Edit
+type POVAAPI struct {
+	engine *POVA
+}
+
+func (api *POVAAPI) CurrentValidator(blockNum hexutil.Uint64) (common.Address, error) {
+	return api.engine.getValidator(uint64(blockNum)), nil
+}
+➕ Sửa APIs():
+go
+Copy
+Edit
+func (p *POVA) APIs(chain consensus.ChainHeaderReader) []rpc.API {
+	return []rpc.API{
+		{
+			Namespace: "pova",
+			Version:   "1.0",
+			Service:   &POVAAPI{engine: p},
+			Public:    true,
+		},
+	}
+}
+Gọi thử:
+bash
+Copy
+Edit
+curl -X POST http://localhost:8545 \
+ -H "Content-Type: application/json" \
+ -d '{"jsonrpc":"2.0","method":"pova_currentValidator","params":[123],"id":1}'
+✅ Sau khi patch xong
+Bạn có:
+
+Xác thực chữ ký block (tăng bảo mật)
+
+Luân chuyển validator rõ ràng (log + RPC)
+
+Hỗ trợ bỏ qua validator bị treo
+
+Kiến trúc dễ mở rộng (staking / dynamic validator)
