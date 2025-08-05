@@ -1,10 +1,10 @@
 # Hướng Dẫn Triển Khai Thuật Toán POVA trong HD24Chain
 
-## 🎯 Tổng Quan
+## Tổng Quan
 
 Tài liệu này mô tả chi tiết cách triển khai thuật toán POVA (Proof of Validator Authority) trong dự án HD24Chain, bao gồm tất cả các file cần thiết, cấu trúc code và các bước thực hiện.
 
-## 📁 Cấu Trúc Files Triển Khai
+## Cấu Trúc Files Triển Khai
 
 ### **1. Core Implementation Files**
 
@@ -23,7 +23,7 @@ go-ethereum-1.13.15/
 └── interfaces.go                # Consensus interface
 ```
 
-## 🔧 Chi Tiết Triển Khai
+## Chi Tiết Triển Khai
 
 ### **File 1: params/config.go**
 
@@ -472,7 +472,7 @@ go test ./consensus/pova/
 ```
 ```
 
-## 🔧 Cấu Hình Genesis
+## Cấu Hình Genesis
 
 ### **File 5: genesis.json**
 
@@ -515,7 +515,7 @@ go test ./consensus/pova/
 }
 ```
 
-## 🚀 Các Bước Triển Khai
+## Các Bước Triển Khai
 
 ### **Bước 1: Tạo Thư Mục POVA**
 
@@ -625,7 +625,7 @@ C:\HD24Chain\mychain.exe --datadir C:\HD24Chain\data init C:\HD24Chain\genesis.j
 C:\HD24Chain\mychain.exe --datadir C:\HD24Chain\data --mine --unlock 0x[VALIDATOR_ADDRESS] --password C:\HD24Chain\validator1.pass --miner.etherbase=0x[VALIDATOR_ADDRESS] --http --http.addr=0.0.0.0 --http.port=8545 --http.api=eth,net,web3,personal,miner,admin,debug --allow-insecure-unlock --networkid=99999 --verbosity=3
 ```
 
-## 🔍 Kiểm Tra Triển Khai
+## Kiểm Tra Triển Khai
 
 ### **1. Kiểm Tra Consensus Engine**
 
@@ -679,7 +679,7 @@ $blockTime = $currentTime - $timestamp
 Write-Host "Block time: $blockTime seconds"
 ```
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 ### **1. Lỗi Build**
 
@@ -712,7 +712,7 @@ tail -f C:\HD24Chain\data\geth\chaindata\geth.log
 C:\HD24Chain\mychain.exe --datadir C:\HD24Chain\data account list
 ```
 
-## 📚 Tài Liệu Tham Khảo
+## Tài Liệu Tham Khảo
 
 - **[Go Ethereum Consensus](https://github.com/ethereum/go-ethereum/tree/master/consensus)**
 - **[Ethereum Yellow Paper](https://ethereum.github.io/yellowpaper/paper.pdf)**

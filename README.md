@@ -7,7 +7,7 @@ HD24Chain là nền tảng blockchain cấp doanh nghiệp, sẵn sàng cho sả
 ##  Tính Năng Chính
 
 -  **Đồng Thuận POVA**: Cơ chế đồng thuận tùy chỉnh với luân chuyển validator xác định
--  **Hiệu Suất Cao**: Thời gian block 20 giây, tối ưu hóa bộ nhớ và CPU
+-  **Hiệu Suất Cao**: Thời gian block tùy chỉnh, tối ưu hóa bộ nhớ và CPU
 -  **Bảo Mật Doanh Nghiệp**: Xác thực đa lớp, mã hóa end-to-end
 -  **Tương Thích Ethereum**: Hỗ trợ EVM đầy đủ, smart contract Solidity
 -  **API Đa Dạng**: HTTP RPC, WebSocket, IPC
@@ -22,7 +22,7 @@ HD24Chain là nền tảng blockchain cấp doanh nghiệp, sẵn sàng cho sả
 | **Thời Gian Block** | 20 giây (có thể cấu hình) |
 | **Chain ID** | 99999 (có thể tùy chỉnh) |
 | **Gas Limit** | 16,777,216 gas mỗi block |
-| **Validators** | 1-10 (có thể cấu hình) |
+| **Validators** |có thể cấu hình |
 | **Hỗ Trợ API** | HTTP RPC, WebSocket, IPC |
 | **Nền Tảng** | Windows Server 2019/2022, Windows 10/11 |
 | **Database** | Pebble (LevelDB compatible) |
