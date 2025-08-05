@@ -261,6 +261,7 @@ C:\HD24Chain\mychain.exe --datadir C:\HD24Chain\data --mine --unlock 0x[ĐỊA_C
 
 ##  Thông Tin Liên Hệ
 - **GitHub**: https://github.com/haidang24 
+- **Gmail**: haidangattt@gmail.com
 
 
 ##  Tài Liệu Thêm
@@ -268,7 +269,3 @@ C:\HD24Chain\mychain.exe --datadir C:\HD24Chain\data --mine --unlock 0x[ĐỊA_C
 - **[POVA Algorithm](POVA_ALGORITHM.md)** - Chi tiết thuật toán POVA
 - **[Deployment Guide](DEPLOYMENT.md)** - Hướng dẫn triển khai 
 
----
-
-**Sẵn sàng triển khai blockchain doanh nghiệp của bạn? Liên hệ đội ngũ bán hàng ngay hôm nay!**
-* Gmail: haidangattt@gmail.com
